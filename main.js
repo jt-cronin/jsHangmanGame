@@ -1,12 +1,24 @@
-zipCode = process.argv[2]
-console.log("We will look up the wather for your zipCode...")
-console.log(zipCode)
+const request = require('request');
+var lat, lng;
+ 
+request('http://maps.googleapis.com/maps/api/geocode/json?components=postal_code:68022', { json: true }, (err, res, body) => {
+  if (err) { return console.log(err); }
+  	res.on('response', function(response){
+  		lat = response.results[0].geometry.location.lat;
+  	});
+  	// console.log("the latitude is:", body.results[0].geometry.location.lat);
+});
+
+request('http://maps.googleapis.com/maps/api/geocode/json?components=postal_code:68022', { json: true }, (err, res, body) => {
+  if (err) { return console.log(err); }
+  res.on('response', function(response){
+  	lng = body.results[0].geometry.location.lng;
+  });
+  // console.log("the longitude is:", body.results[0].geometry.location.lng);
+});
 
 
-var http = require('http');
-
-var request = new XMLHttpRequest();
-
-request.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA", true);
-
-console.log(request)
+console.log("Hello world")
+console.log("the lat and lng should be")
+console.log(lat + lng )
+console.log("inbetween this sentence")
